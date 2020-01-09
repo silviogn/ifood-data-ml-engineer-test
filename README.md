@@ -41,4 +41,4 @@ Languages, frameworks, platforms are not a constraint, but your solution must be
 
 The last skill a ML Engineer must have is cloud proficiency. For iFood, AWS is our cloud of choice.
 
-For this exercise, we would like for you to propose an AWS architecture to serve the solution for the previous exercise (the ML Rest API). A single page describing the resources needed is sufficient, although you are free to provide code if you like it. Please have in mind that this structure must be reliable, scalable and as cheap as possible without compromising the other two requisites.
+For this exercise, we would like for you to propose an AWS architecture to serve a solution for one of the two previous exercises. A single page describing the resources needed is sufficient, although you are free to provide code if you like it. Please have in mind that this structure must be reliable, scalable and as cheap as possible without compromising the other two requisites.
