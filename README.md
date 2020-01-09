@@ -3,7 +3,7 @@
 The goal of the exercises below is to evaluate the candidate knowledge and problem solving expertise regarding the main development focuses for the iFood ML Platform team: MLOps and Feature Store development.
 
 
-## Sandbox: Feature Store building
+## Feature Store building
 
 A feature store is a data provider serves features for machine learning models, both to its training and prediction phases.
 
@@ -11,7 +11,7 @@ As such, it must be able to provide data with consistency, reliability and flexi
 
 The goal for this exercise is to create a simple feature store.
 
-### Requirements
+### Setup
 
 * There's a kafka streaming for order events. Orders are made by clients, prepared by restaurants and delivered by drivers.
   * kafka #1: a49784be7f36511e9a6b60a341003dc2-1378330561.us-east-1.elb.amazonaws.com:9092
@@ -25,7 +25,7 @@ Feel free to use any solution to process and store this data.
 
 * You're a ml engineer. Feel free to use any language and technology to reach your goal. Languages, frameworks, platforms are not a constraint, but your solution must be inside a docker image, docker compose, script or notebook ready to be run. Running this container/script or notebook should start reading the specified files and store the results in a structured format.
 
-## Sandbox: ML model serving
+## ML model serving
 
 Part of the ML Engineer job is to ensure the models developed by the Data Scientists are correctly deployed to the production environment, and are accessible via a REST microservice.
 
@@ -36,3 +36,9 @@ There are two goals for this exercise. The first one is to create an automated M
 The second one is to create a Rest API documented with Swagger that serves a ML model predictions.
 
 Languages, frameworks, platforms are not a constraint, but your solution must be inside a docker image, docker compose, script or notebook ready to be run. Training a model or serving the Rest API/Swagger structure should be as simple as running a script or something similar. You should also provide a README file on how to execute the training job, and how to request the API or Swagger.
+
+## AWS infrastructure
+
+The last skill a ML Engineer must have is cloud proficiency. For iFood, AWS is our cloud of choice.
+
+For this exercise, we would like for you to propose an AWS architecture to serve the solution for the previous exercise (the ML Rest API). A single page describing the resources needed is sufficient, although you are free to provide code if you like it. Please have in mind that this structure must be reliable, scalable and as cheap as possible without compromising the other two requisites.
