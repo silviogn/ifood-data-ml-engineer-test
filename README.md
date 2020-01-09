@@ -42,3 +42,25 @@ Languages, frameworks, platforms are not a constraint, but your solution must be
 The last skill a ML Engineer must have is cloud proficiency. For iFood, AWS is our cloud of choice.
 
 For this exercise, we would like for you to propose an AWS architecture to serve a solution for one of the two previous exercises. A single page describing the resources needed is sufficient, although you are free to provide code if you like it. Please have in mind that this structure must be reliable, scalable and as cheap as possible without compromising the other two requisites.
+
+## BONUS!!
+
+These exercises are all optional! They are not required to evaluate how you'll perform in this job, and they require no skills listed in the job description whatsoever! They are fun and difficult, though 😈
+
+Let's get to it!
+
+### Level 1 and 2
+
+Can you figure out the passwords for the binaries `bonus/level01` and `bonus/level02`?
+
+### Level 3
+
+Can you get a shell from the binary `bonus/level03`?
+
+```
+ Ex.
+ $ ./bonus/level03
+ [+] calling some crazy function, can you get a shell?
+ password: something_that_executes_/bin/sh
+ $ echo "Habemus shell!"
+```
