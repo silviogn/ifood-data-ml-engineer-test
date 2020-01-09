@@ -19,7 +19,7 @@ The goal for this exercise is to create a simple feature store.
 * Data needs to be consistent, we can’t lose anything.
 * This processing pipeline needs to be scalable.
 
-Feel free to use any solution to process and store this these data.
+Feel free to use any solution to process and store this data.
 
 ### Deliverable
 
