@@ -1,0 +1,27 @@
+summary: "Italian Music Prediction Api"
+description: "This is a simple API that predicts the region of a music according it characteristics."
+consumes:
+- "application/json"
+produces:
+- "application/json"
+parameters:
+- in: "body"
+  name: "body"
+  description: "Accepts a input dictionary composed by the music features."
+  required: true
+  schema:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        x1:
+          type: "integer"
+          format: "int64"
+          example : 45
+        x2:
+          type: "integer"
+          format: "int64"
+          example : 451
+responses:
+  405:
+    description: "Invalid input"
