@@ -1,14 +1,17 @@
 import traceback
 import pandas as pd
 import warnings
+import json
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from sklearn.externals import joblib
 from src.parameters import *
 
 from flasgger import Swagger
 from flasgger.utils import swag_from
 from flasgger import LazyString, LazyJSONEncoder
+
+from service.service_helper import *
 
 
 warnings.simplefilter("ignore")
@@ -45,13 +48,30 @@ swagger = Swagger(app, config=swagger_config, template=template)
 def predict():
     try:
         json_request = request.json
-        print(json_request)
-        query_data = pd.get_dummies(pd.DataFrame(json_request))
-        query_data = query_data.reindex(columns=music_model_features).fillna(0)
-        prediction = list(random_forests_classifier.predict(query_data))
-        return jsonify({"predictions:": str(prediction)})
-    except Exception as ex:
-        return jsonify({'Service Error': traceback.format_exc()})
+
+        data_frame_prediction = pd.DataFrame(json_request)
+        data_frame_prediction = data_frame_prediction.reindex(columns=music_model_features).fillna(0)
+
+        artist_genre_series = data_frame_prediction["artist_genre"]
+        data_frame_prediction["artist_genre"] = data_frame_prediction.apply(
+            lambda row: get_genre_id(row["artist_genre"], data_frame_genre), axis=1)
+
+        data_frame_prediction["artist_region"] = random_forests_classifier.predict(data_frame_prediction)
+
+        data_frame_prediction["artist_region"] = data_frame_prediction.apply(
+            lambda row: get_region_name(row["artist_region"], data_frame_regions), axis=1)
+
+        data_frame_prediction["artist_genre"] = artist_genre_series
+
+        predictions_return = json.dumps(data_frame_prediction.to_dict(orient='records'))
+
+        response = Response(status=200)
+        response.data = predictions_return
+        return response
+    except:
+        response = Response(status=400)
+        response.data = "Api Exception"
+        return response
 
 
 if __name__ == '__main__':
@@ -69,6 +89,9 @@ if __name__ == '__main__':
             raise Exception("Model features not found. Train the model.")
 
         print("Features Loaded: {}".format(PATH_TO_MUSIC_MODEL_FEATURES))
+
+        data_frame_regions = pd.read_csv(PATH_TO_REGIONS_DATA)
+        data_frame_genre = pd.read_csv(PATH_TO_GENRE_DATA)
 
     except Exception as e:
         print(e.args)

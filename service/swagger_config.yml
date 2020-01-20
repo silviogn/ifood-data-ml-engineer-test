@@ -14,14 +14,52 @@ parameters:
     items:
       type: "object"
       properties:
-        x1:
+        artist_genre:
+          type: "string"
+          format: "string"
+          example : "pop"
+        musical_features_acousticness:
+          type: "number"
+          format: "double"
+          example : 0.571
+        musical_features_valence:
+          type: "number"
+          format: "double"
+          example: 0.484
+        musical_features_danceability:
+          type: "number"
+          format: "double"
+          example: 0.481
+        musical_features_duration_ms:
           type: "integer"
           format: "int64"
-          example : 45
-        x2:
-          type: "integer"
-          format: "int64"
-          example : 451
+          example: 262413
+        musical_features_loudness:
+          type: "number"
+          format: "double"
+          example: -6.436
+        musical_features_energy:
+          type: "number"
+          format: "double"
+          example: 0.546
+        musical_features_liveness:
+          type: "number"
+          format: "double"
+          example: 0.795
+        musical_features_tempo:
+          type: "number"
+          format: "double"
+          example: 126.021
+        musical_features_speechiness:
+          type: "number"
+          format: "double"
+          example: 0.0398
+        musical_features_instrumentalness:
+          type: "number"
+          format: "double"
+          example: 0
 responses:
-  405:
-    description: "Invalid input"
+  200:
+    description: "OK"
+  401:
+    description: "Api Exception"

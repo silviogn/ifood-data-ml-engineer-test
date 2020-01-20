@@ -21,9 +21,11 @@ def scale_data(x: pd.DataFrame) -> pd.DataFrame:
 
 
 def search_hyperparameters(x, y):
-    #Searching the best hyperparameter in this case the number of classifiers
+
     param_grid = {'n_estimators': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160,
                                    170, 180, 190, 200]}
+
+    param_grid = {'n_estimators': [200]}
 
     random_forests_classifier = RandomForestClassifier()
 
@@ -43,7 +45,8 @@ def build_model(file: str, model_file: str, model_features_file: str):
 
     model_class_data = music_data_frame['artist_region']
 
-    music_data_frame = music_data_frame.drop(['artist_region', 'Unnamed: 0', 'id_song', 'artist_artist_id', 'lyrics', 'song'], axis = 1)
+    music_data_frame = music_data_frame.drop(['artist_region', 'Unnamed: 0', 'id_song', 'artist_artist_id', 'lyrics',
+                                              'song', 'artist_popularity', 'artist_name', 'song'], axis=1)
 
     model_features = list(music_data_frame.columns)
 
