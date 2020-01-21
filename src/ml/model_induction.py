@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -38,6 +39,7 @@ class MusicModelInduction:
         return grid_search_cv.best_params_
 
     def build(self, data_file: str, model_file: str, model_features_file: str) -> None:
+
         music_data_frame = pd.read_csv(data_file)
 
         model_class_data = music_data_frame['artist_region']
