@@ -12,7 +12,9 @@ def run():
     """Executes the data convertion and model induction."""
     try:
         MusicDataPreprocessing.convert_data()
-        MusicModelInduction.build_model(PATH_TO_PROCESSED_DATA, PATH_TO_MUSIC_MODEL, PATH_TO_MUSIC_MODEL_FEATURES)
+        MusicModelInduction().build(data_file=PATH_TO_PROCESSED_DATA, model_file=PATH_TO_MUSIC_MODEL,
+                                  model_features_file=PATH_TO_MUSIC_MODEL_FEATURES)
+        print("Model done!!!")
     except Exception as excep:
         log(excep)
 
