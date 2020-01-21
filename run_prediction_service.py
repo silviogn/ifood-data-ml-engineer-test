@@ -1,23 +1,18 @@
-import traceback
-import pandas as pd
 import warnings
-import json
+import pandas as pd
 
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, Response
 from sklearn.externals import joblib
 from src.parameters import *
-
 from flasgger import Swagger
 from flasgger.utils import swag_from
 from flasgger import LazyString, LazyJSONEncoder
 
-from service.service_helper import *
-
+from src.service.service_helper import MusicServiceHelper
 
 warnings.simplefilter("ignore")
 app = Flask(__name__)
-app.config["SWAGGER"] = {"title": "Italian Music Prediction Api", "uiversion": 2}
-
+app.config["SWAGGER"] = {"title": "Italian Music Prediction Api", "uiversion": 3}
 
 swagger_config = {
     "headers": [],
@@ -44,31 +39,18 @@ swagger = Swagger(app, config=swagger_config, template=template)
 
 
 @app.route("/predict/music", methods=['POST'])
-@swag_from("/service/swagger_config.yml")
+@swag_from("/src/service/swagger_config.yml")
 def predict():
     try:
         json_request = request.json
-
-        data_frame_prediction = pd.DataFrame(json_request)
-        data_frame_prediction = data_frame_prediction.reindex(columns=music_model_features).fillna(0)
-
-        artist_genre_series = data_frame_prediction["artist_genre"]
-        data_frame_prediction["artist_genre"] = data_frame_prediction.apply(
-            lambda row: get_genre_id(row["artist_genre"], data_frame_genre), axis=1)
-
-        data_frame_prediction["artist_region"] = random_forests_classifier.predict(data_frame_prediction)
-
-        data_frame_prediction["artist_region"] = data_frame_prediction.apply(
-            lambda row: get_region_name(row["artist_region"], data_frame_regions), axis=1)
-
-        data_frame_prediction["artist_genre"] = artist_genre_series
-
-        predictions_return = json.dumps(data_frame_prediction.to_dict(orient='records'))
-
+        prediction_result = music_service_helper.predicts_music_region(json_request, data_frame_genre,
+                                                                       data_frame_regions, music_model_features,
+                                                                       random_forests_classifier)
         response = Response(status=200)
-        response.data = predictions_return
+        response.data = prediction_result
         return response
-    except:
+    except Exception as ex:
+        print(ex.args)
         response = Response(status=400)
         response.data = "Api Exception"
         return response
@@ -91,9 +73,11 @@ if __name__ == '__main__':
         print("Features Loaded: {}".format(PATH_TO_MUSIC_MODEL_FEATURES))
 
         data_frame_regions = pd.read_csv(PATH_TO_REGIONS_DATA)
+
         data_frame_genre = pd.read_csv(PATH_TO_GENRE_DATA)
 
+        music_service_helper = MusicServiceHelper()
+
+        app.run(debug=True)
     except Exception as e:
         print(e.args)
-
-    app.run(debug=True)
