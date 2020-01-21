@@ -9,7 +9,7 @@ class MusicServiceHelper:
     def predicts_music_region(self, json_request: json, data_frame_genre: pd.DataFrame,
                               data_frame_regions: pd.DataFrame, music_model_features: list,
                               random_forests_classifier: RandomForestClassifier) -> json:
-
+        """Predicts the region of music to a list of unclassified instances."""
         data_frame_prediction = pd.DataFrame(json_request)
         data_frame_prediction = data_frame_prediction.reindex(columns=music_model_features).fillna(0)
 

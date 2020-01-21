@@ -9,6 +9,7 @@ from flasgger.utils import swag_from
 from flasgger import LazyString, LazyJSONEncoder
 
 from src.service.service_helper import MusicServiceHelper
+from src.logging_app import *
 
 warnings.simplefilter("ignore")
 app = Flask(__name__)
@@ -20,12 +21,11 @@ swagger_config = {
         {
             "endpoint": "apispec_1",
             "route": "/apispec_1.json",
-            "rule_filter": lambda rule: True,  # all in
-            "model_filter": lambda tag: True,  # all in
+            "rule_filter": lambda rule: True,
+            "model_filter": lambda tag: True,
         }
     ],
     "static_url_path": "/flasgger_static",
-    # "static_folder": "static",  # must be set by user
     "swagger_ui": True,
     "specs_route": "/swagger/",
 }
@@ -49,28 +49,25 @@ def predict():
         response = Response(status=200)
         response.data = prediction_result
         return response
-    except Exception as ex:
-        print(ex.args)
+    except Exception as excep:
+        log(excep)
         response = Response(status=400)
         response.data = "Api Exception"
         return response
 
 
 if __name__ == '__main__':
+    """ Prediction service initialization. Loads the model, model features and data to the memory."""
     try:
         random_forests_classifier = joblib.load(PATH_TO_MUSIC_MODEL)
 
         if random_forests_classifier is None:
             raise Exception("Model not found. Train the model.")
 
-        print("Model Loaded: {}".format(PATH_TO_MUSIC_MODEL))
-
         music_model_features = joblib.load(PATH_TO_MUSIC_MODEL_FEATURES)
 
         if music_model_features is None:
             raise Exception("Model features not found. Train the model.")
-
-        print("Features Loaded: {}".format(PATH_TO_MUSIC_MODEL_FEATURES))
 
         data_frame_regions = pd.read_csv(PATH_TO_REGIONS_DATA)
 
@@ -79,5 +76,6 @@ if __name__ == '__main__':
         music_service_helper = MusicServiceHelper()
 
         app.run(debug=True)
-    except Exception as e:
-        print(e.args)
+    except Exception as excep:
+        log(excep)
+

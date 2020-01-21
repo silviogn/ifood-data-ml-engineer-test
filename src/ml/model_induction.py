@@ -42,6 +42,9 @@ class MusicModelInduction:
 
         model_class_data = music_data_frame['artist_region']
 
+        """After an exploratory analysis of the data, the features below were 
+        removed to build a dataset that fits the idea of the prediction model. """
+
         music_data_frame = music_data_frame.drop(['artist_region', 'Unnamed: 0', 'id_song', 'artist_artist_id', 'lyrics',
                                                   'song', 'artist_popularity', 'artist_name', 'song'], axis=1)
 

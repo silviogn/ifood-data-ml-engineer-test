@@ -40,7 +40,7 @@ class MusicDataPreprocessing:
 
         data_frame_music = data_frame_music.drop(['artist_region_raw', 'artist_genre_raw'], axis=1)
 
-        # Persists the converted and preprocessed dataset.
+        # Persists the converted and preprocessed datasets.
         data_frame_music.to_csv(PATH_TO_PROCESSED_DATA)
 
         data_frame_regions.to_csv(PATH_TO_REGIONS_DATA)

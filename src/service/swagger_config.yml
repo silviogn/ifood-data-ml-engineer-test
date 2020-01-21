@@ -1,5 +1,5 @@
 summary: "Italian Music Prediction Api"
-description: "This is a simple API that predicts the region of a music according it characteristics."
+description: "This is an API that predicts the region of a music according to it characteristics."
 consumes:
 - "application/json"
 produces:
@@ -7,7 +7,7 @@ produces:
 parameters:
 - in: "body"
   name: "body"
-  description: "Accepts a input dictionary composed by the music features."
+  description: "Accepts a input dictionary composed by the music and author features."
   required: true
   schema:
     type: "array"
