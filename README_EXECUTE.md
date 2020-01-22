@@ -23,7 +23,7 @@ All the commands described below should be executed in the terminal.
     ```
 4. Activate the virtual environment.
     ```
-       venv\Scripts\activate.bat
+    venv\Scripts\activate.bat
     ```
 
 5. Install the requirements of the project.
