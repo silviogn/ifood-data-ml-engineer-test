@@ -28,8 +28,6 @@ class MusicModelInduction:
         param_grid = {'n_estimators': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160,
                                        170, 180, 190, 200]}
 
-        param_grid = {'n_estimators': [200]}
-
         random_forests_classifier = RandomForestClassifier()
 
         grid_search_cv = GridSearchCV(random_forests_classifier, param_grid, cv=10)
